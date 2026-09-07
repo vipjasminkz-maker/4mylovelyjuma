@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Моя Вселенная ✨</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(ellipse at bottom, #0d1b2a 0%, #02040a 100%);
+      font-family: 'Georgia', serif;
+      overflow-x: hidden;
+      color: #fff;
+      padding: 20px;
+    }
+
+    /* Анимированный звездный фон */
+    .stars-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      background-color: #ffffff;
+      border-radius: 50%;
+      animation: twinkle linear infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.3); }
+    }
+
+    /* Космическая туманность */
+    .nebula {
+      position: fixed;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(112, 56, 160, 0.22) 0%, rgba(14, 116, 144, 0.15) 50%, transparent 70%);
+      filter: blur(80px);
+      border-radius: 50%;
+      z-index: 1;
+      animation: floatNebula 16s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes floatNebula {
+      0% { transform: translate(-15%, -15%) scale(1); }
+      100% { transform: translate(15%, 15%) scale(1.15); }
+    }
+
+    /* Карточка открытки */
+    .card {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 600px;
+      padding: 45px 35px;
+      background: rgba(13, 22, 41, 0.7);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 215, 0, 0.35);
+      box-shadow: 0 0 40px rgba(14, 116, 144, 0.25), inset 0 0 20px rgba(255, 255, 255, 0.03);
+      text-align: center;
+      animation: cardAppear 1.4s ease-out forwards;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    @keyframes cardAppear {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Внутренняя золотистая декоративная рамка */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 16px;
+      pointer-events: none;
+    }
+
+    .space-icon {
+      font-size: 38px;
+      margin-bottom: 20px;
+      display: inline-block;
+      animation: pulse 3s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.6)); }
+      50% { transform: scale(1.12); filter: drop-shadow(0 0 16px rgba(255, 215, 0, 0.9)); }
+    }
+
+    .letter-text {
+      font-size: 1.15rem;
+      line-height: 1.85;
+      color: #f1f5f9;
+      font-weight: 300;
+      letter-spacing: 0.3px;
+      margin-bottom: 30px;
+      white-space: pre-line;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .heart-btn {
+      background: linear-gradient(135deg, #e63946, #c1121f);
+      color: #ffffff;
+      border: none;
+      padding: 14px 32px;
+      font-size: 1.05rem;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(230, 57, 70, 0.45);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      font-family: inherit;
+    }
+
+    .heart-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(230, 57, 70, 0.65);
+    }
+
+    .heart-btn:active {
+      transform: translateY(0) scale(0.98);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nebula"></div>
+  <div class="stars-container" id="stars"></div>
+
+  <div class="card">
+    <div class="space-icon">🌌</div>
+    <div class="letter-text">
+      Жаным, я очень сильно тебя люблю!
+
+      Понимаю, со мной не легко, да и с тобой не всегда все так понятно... Но я думаю, мы — дополнение друг друга и всегда останемся им.
+
+      Мне очень комфортно с тобой, и я дорожу временем, проведенным с тобой. В любой звонок я ощущаю себя как в укрытии от чужого и строгого мира.
+
+      Будто бы нашла свою часть на этой планете — нашла свою вселенную, где мне хорошо, где я люблю и могу быть любимой. ✨
+    </div>
+    <button class="heart-btn" onclick="sendLove(event)">Отправить сердечки ❤️</button>
+  </div>
+
+  <script>
+    // Создание мерцающих звезд
+    const starsContainer = document.getElementById('stars');
+    const starCount = 130;
+
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      
+      const size = Math.random() * 2.5 + 1;
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.left = `${Math.random() * 100}%`;
+      
+      star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+      star.style.animationDelay = `${Math.random() * 3}s`;
+      
+      starsContainer.appendChild(star);
+    }
+
+    // Анимация сердечек при клике
+    function sendLove(event) {
+      const btn = event.target;
+      const rect = btn.getBoundingClientRect();
+      
+      for (let i = 0; i < 12; i++) {
+        const heart = document.createElement('span');
+        heart.innerHTML = Math.random() > 0.5 ? '❤️' : '✨';
+        heart.style.position = 'fixed';
+        heart.style.left = `${rect.left + rect.width / 2}px`;
+        heart.style.top = `${rect.top}px`;
+        heart.style.fontSize = `${Math.random() * 16 + 16}px`;
+        heart.style.pointerEvents = 'none';
+        heart.style.zIndex = '100';
+        heart.style.transition = 'all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        
+        document.body.appendChild(heart);
+
+        const x = (Math.random() - 0.5) * 200;
+        const y = -Math.random() * 140 - 60;
+
+        setTimeout(() => {
+          heart.style.transform = `translate(${x}px, ${y}px) scale(0)`;
+          heart.style.opacity = '0';
+        }, 20);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 1200);
+      }
+    }
+  </script>
+</body>
+</html>
